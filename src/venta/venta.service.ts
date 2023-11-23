@@ -29,12 +29,13 @@ export class VentaService {
     const ventaSchema = VentaMapper.toSchema(
       createVenta,
       producto,
-      producto._id.toString(),
+      producto._id,
     );
 
     const resultado = await this.ventaModel.create(ventaSchema);
+
     const withRelations = await this.ventaModel
-      .findById(resultado.id)
+      .findById(resultado._id)
       .populate('producto');
 
     return VentaMapper.toDto(withRelations);
@@ -61,6 +62,6 @@ export class VentaService {
       },
       { $group: { _id: '$producto.categoria', ventas: { $sum: '$total' } } },
     ]);
-    return VentaMapper.toReportList(resultado);
+    return VentaMapper.toReport(resultado);
   }
 }

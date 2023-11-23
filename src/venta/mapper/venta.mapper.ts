@@ -8,9 +8,7 @@ import { Venta } from '../schemas/venta.schema';
 export class VentaMapper {
   static toDto(schema: Venta): VentaDto {
     const dto = new VentaDto();
-    if (!(schema.producto instanceof ObjectId)) {
-      dto.producto = ProductoMapper.toDto(schema.producto);
-    }
+    dto.producto = ProductoMapper.toDto(schema.producto as Producto);
     dto.cantidad = schema.cantidad;
     dto.total = schema.total;
     dto.fecha = schema.fecha;
@@ -21,16 +19,20 @@ export class VentaMapper {
     return schemas.map((schema) => this.toDto(schema));
   }
 
-  static toSchema(dto: CreateVentaDto, producto: Producto, id: string): Venta {
+  static toSchema(
+    dto: CreateVentaDto,
+    producto: Producto,
+    id: ObjectId,
+  ): Venta {
     const schema: Venta = new Venta();
-    schema.producto = new ObjectId(id);
+    schema.producto = id;
     schema.cantidad = dto.cantidad;
     schema.total = producto.precio * dto.cantidad;
     schema.fecha = new Date();
     return schema;
   }
 
-  static toReportList(arrayCategorias: any) {
+  static toReport(arrayCategorias: any) {
     return arrayCategorias.reduce((resultado, categoria) => {
       resultado[categoria._id] = categoria.ventas;
       return resultado;
