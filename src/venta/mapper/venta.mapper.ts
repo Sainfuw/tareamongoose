@@ -30,11 +30,10 @@ export class VentaMapper {
     return schema;
   }
 
-  static toReport(categoria: any) {
-    return { [categoria._id]: categoria.ventas };
-  }
-
-  static toReportList(resultado: any) {
-    return resultado.map((categoria) => this.toReport(categoria));
+  static toReportList(arrayCategorias: any) {
+    return arrayCategorias.reduce((resultado, categoria) => {
+      resultado[categoria._id] = categoria.ventas;
+      return resultado;
+    }, {});
   }
 }
