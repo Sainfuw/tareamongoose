@@ -1,0 +1,11 @@
+db.producto.insertMany([
+  {_id: ObjectId("655e721b4aeb59aa2b78fbe7"), nombre: 'Xiaomi mi 13', categoria: 'telefonos', precio: 400000},
+  {_id: ObjectId("655e721b4aeb59aa2b78fbe8"), nombre: 'TLC 50', categoria: 'televisores', precio: 250000},
+  {_id: ObjectId("655e721b4aeb59aa2b78fbe9"), nombre: 'Asus TUF 2324', categoria: 'computadores', precio: 800000}
+])
+
+db.venta.insertMany([
+  {producto: ObjectId("655e721b4aeb59aa2b78fbe7"), cantidad: 5, total: 2000000, fecha: new Date("2023-11-22")},
+  {producto: ObjectId("655e721b4aeb59aa2b78fbe8"), cantidad: 3, total: 750000, fecha: new Date("2023-11-22")},
+  {producto: ObjectId("655e721b4aeb59aa2b78fbe9"), cantidad: 2, total: 1600000, fecha: new Date("2023-11-22")},
+])
